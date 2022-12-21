@@ -49,12 +49,12 @@ pipeline {
             }
             steps {
                 //withKubeConfig([credentialsId: 'kubernetes-admin', serverUrl: 'https://172.31.5.21:6443']) {
-                  //  sh 'kubectl apply -f train-schedule-kube-canary.yml'
+                 sh 'kubectl apply -f train-schedule-kube-canary.yml'
                 //}
-                kubernetesDeploy(
-                    kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube.yml'
-                )
+                //kubernetesDeploy(
+                 //   kubeconfigId: 'kubeconfig',
+                 //   configs: 'train-schedule-kube.yml'
+                //)
             }
         }
         stage('DeployToProduction') {
