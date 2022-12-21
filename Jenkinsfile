@@ -48,14 +48,14 @@ pipeline {
                 CANARY_REPLICAS = 1
             }
             steps {
-                withKubeConfig([credentialsId: 'kubernetes-admin', serverUrl: 'https://172.31.5.21:6443']) {
-                    sh 'kubectl apply -f train-schedule-kube-canary.yml'
-                }
-                //kubernetesDeploy(
-                  //  kubeconfigId: 'kubeconfig',
-                    //configs: 'train-schedule-kube-canary.yml',
-                    //enableConfigSubstitution: true
-                //)
+                //withKubeConfig([credentialsId: 'kubernetes-admin', serverUrl: 'https://172.31.5.21:6443']) {
+                  //  sh 'kubectl apply -f train-schedule-kube-canary.yml'
+                //}
+                kubernetesDeploy(
+                    kubeconfigId: 'kubeconfig',
+                    configs: 'train-schedule-kube-canary.yml',
+                    enableConfigSubstitution: true
+                )
             }
         }
         stage('DeployToProduction') {
