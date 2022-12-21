@@ -1,5 +1,8 @@
 pipeline {
     agent any
+    tools {
+        jdk 'java8'
+    }
     environment {
         DOCKER_IMAGE_NAME = "sena83/train-schedule"
     }
