@@ -15,9 +15,6 @@ pipeline {
             }
         }
         stage('Build Docker Image') {
-            //when {
-             //   branch 'master'
-           // }
             steps {
                 script {
                     app = docker.build(DOCKER_IMAGE_NAME)
@@ -28,9 +25,6 @@ pipeline {
             }
         }
         stage('Push Docker Image') {
-            //when {
-              //  branch 'master'
-            //}
             steps {
                 script {
                     docker.withRegistry('https://registry.hub.docker.com', 'dockerHub') {
@@ -41,26 +35,18 @@ pipeline {
             }
         }
         stage('CanaryDeploy') {
-            //when {
-              //  branch 'master'
-            //}
             environment { 
                 CANARY_REPLICAS = 1
             }
             steps {
-                //withKubeConfig([credentialsId: 'kubernetes-admin', serverUrl: 'https://172.31.5.21:6443']) {
-                 //sh 'kubectl apply -f train-schedule-kube-canary.yml'
-                //}
                 kubernetesDeploy(
                     kubeconfigId: 'kubeconfig',
-                    configs: 'train-schedule-kube-canary.yml'
+                    configs: 'train-schedule-kube-canary.yml',
+                    enableConfigSubstitution: true
                 )
             }
         }
         stage('DeployToProduction') {
-            //when {
-              //  branch 'master'
-            //}
             environment { 
                 CANARY_REPLICAS = 0
             }
